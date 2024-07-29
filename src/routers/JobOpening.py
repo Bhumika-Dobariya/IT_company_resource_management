@@ -12,6 +12,8 @@ jobopening = APIRouter(tags=["jobopening"])
 db = Sessionlocal()
 
 
+# _______________Create Job Opening______________
+
 @jobopening.post("/job_openings/", response_model=JobOpeningBase)
 def create_job_opening(job_opening: JobOpeningBase):
     logger.info(f"Creating job opening with data: {job_opening}")
@@ -36,7 +38,9 @@ def create_job_opening(job_opening: JobOpeningBase):
 
 
 
-@jobopening.get("/get_job-openings", response_model=JobOpeningBase)
+# _______________Read Job Opening by ID______________
+
+@jobopening.get("/get_job_openings", response_model=JobOpeningBase)
 def read_job_opening(job_id: str):
     logger.info(f"Reading job opening with ID: {job_id}")
     
@@ -50,7 +54,9 @@ def read_job_opening(job_id: str):
 
 
 
-@jobopening.get("/list_of_job-openings", response_model=List[JobOpeningBase])
+# _______________List All Job Openings______________
+
+@jobopening.get("/list_of_job_openings", response_model=List[JobOpeningBase])
 def list_job_openings():
     logger.info("Listing all job openings")
     
@@ -61,7 +67,9 @@ def list_job_openings():
 
 
 
-@jobopening.patch("/job-openings", response_model=JobOpeningBase)
+# _______________Update Job Opening by ID______________
+
+@jobopening.patch("/update_job_openings", response_model=JobOpeningBase)
 def update_job_opening(job_id: str, job_opening_update: UpdateJobopening):
     logger.info(f"Updating job opening with ID: {job_id} with data: {job_opening_update.dict()}")
     
@@ -82,7 +90,9 @@ def update_job_opening(job_id: str, job_opening_update: UpdateJobopening):
 
 
 
-@jobopening.delete("/job-openings", response_model=JobOpeningBase)
+# _______________Delete Job Opening by ID______________
+
+@jobopening.delete("/delete_job_openings", response_model=JobOpeningBase)
 def delete_job_opening(job_id: str):
     logger.info(f"Deleting job opening with ID: {job_id}")
     
@@ -98,6 +108,8 @@ def delete_job_opening(job_id: str):
     return job_opening
 
 
+
+# _______________Close Job Opening by ID______________
 
 @jobopening.patch("/job_openings_close", response_model=JobOpeningBase)
 async def close_job_opening(job_opening_id: str):
@@ -118,7 +130,9 @@ async def close_job_opening(job_opening_id: str):
 
 
 
-@jobopening.get("/job_openings_open/", response_model=List[JobOpeningBase])
+# _______________Get All Open Job Openings______________
+
+@jobopening.get("/job_openings_open", response_model=List[JobOpeningBase])
 async def read_open_job_openings():
     logger.info("Fetching all open job openings")
     
@@ -126,6 +140,10 @@ async def read_open_job_openings():
     
     logger.info(f"Number of open job openings found: {len(job_openings)}")
     return job_openings
+
+
+
+# _______________Get All Closed Job Openings______________
 
 @jobopening.get("/job_openings_closed/", response_model=List[JobOpeningBase])
 async def read_closed_job_openings():
@@ -138,6 +156,8 @@ async def read_closed_job_openings():
 
 
 
+# _______________Get Job Openings by Location______________
+
 @jobopening.get("/job_openings_location", response_model=List[JobOpeningBase])
 async def read_job_openings_by_location(location: str):
     logger.info(f"Fetching job openings at location: {location}")
@@ -148,6 +168,8 @@ async def read_job_openings_by_location(location: str):
     return job_openings
 
 
+
+# _______________Reopen Job Opening by ID______________
 
 @jobopening.patch("/job_openings_reopen", response_model=JobOpeningBase)
 async def reopen_job_opening(job_opening_id: str):

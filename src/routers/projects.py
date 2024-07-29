@@ -13,6 +13,8 @@ db = Sessionlocal()
 
 
 
+# _______________Create Project______________
+
 @Project.post("/projects/", response_model=ProjectCreate)
 def create_project(project: ProjectCreate):
     logger.info(f"Creating project with title: {project.Title}")
@@ -34,6 +36,8 @@ def create_project(project: ProjectCreate):
 
 
 
+# _______________Read Project by ID______________
+
 @Project.get("/read_Project", response_model=ProjectCreate)
 def read_project(id: str):
     logger.info(f"Reading project with ID: {id}")
@@ -44,6 +48,8 @@ def read_project(id: str):
     return project
 
 
+
+# _______________Get All Active Projects______________
 
 @Project.get("/get_all_Project", response_model=List[ProjectCreate])
 def get_all_Project():
@@ -56,6 +62,8 @@ def get_all_Project():
 
 
 
+# _______________Get Active Projects______________
+
 @Project.get("/projects_active", response_model=List[ProjectCreate])
 def read_active_projects():
     logger.info("Fetching all active projects")
@@ -66,6 +74,8 @@ def read_active_projects():
     return active_projects
 
 
+
+# _______________Get Completed Projects______________
 
 @Project.get("/projects_complated", response_model=List[ProjectCreate])
 def read_complated_projects():
@@ -78,6 +88,8 @@ def read_complated_projects():
 
 
 
+# _______________Get Pending Projects______________
+
 @Project.get("/projects_pending", response_model=List[ProjectCreate])
 def read_pending_projects():
     logger.info("Fetching all pending projects")
@@ -89,6 +101,8 @@ def read_pending_projects():
 
 
 
+# _______________Get Cancelled Projects______________
+
 @Project.get("/projects_cancelled", response_model=List[ProjectCreate])
 def read_cancelled_projects():
     logger.info("Fetching all cancelled projects")
@@ -99,6 +113,8 @@ def read_cancelled_projects():
     return cancelled_projects
 
 
+
+# _______________Update Project by Patch______________
 
 @Project.patch("/update_project_by_patch", response_model=ProjectCreate)
 def update_project_by_patch(id: str, project: updateproject):
@@ -118,6 +134,8 @@ def update_project_by_patch(id: str, project: updateproject):
 
 
 
+# _______________Delete Project______________
+
 @Project.delete("/delete_Project")
 def delete_project(id: str):
     logger.info(f"Deleting project with ID: {id}")
@@ -132,6 +150,8 @@ def delete_project(id: str):
     return {"message": "Project deleted successfully"}
 
 
+
+# _______________Complete Project______________
 
 @Project.put("/project_complete", response_model=ProjectCreate)
 def complete_task(id: str):
@@ -149,6 +169,8 @@ def complete_task(id: str):
 
 
 
+# _______________Get Projects by Manager______________
+
 @Project.get("/projects_manager", response_model=List[ProjectCreate])
 def get_projects_by_manager(manager_id: str):
     logger.info(f"Fetching projects for manager ID: {manager_id}")
@@ -156,6 +178,8 @@ def get_projects_by_manager(manager_id: str):
     return db_projects
 
 
+
+# _______________Get Projects by Employee______________
 
 @Project.get("/projects_employee", response_model=List[ProjectCreate])
 def get_projects_by_employee(emp_id: str):
@@ -165,6 +189,8 @@ def get_projects_by_employee(emp_id: str):
 
 
 
+# _______________Get Projects by Date Range______________
+
 @Project.get("/projects_date_range", response_model=List[ProjectCreate])
 def get_projects_by_date_range(start_date: datetime, end_date: datetime):
     logger.info(f"Fetching projects between {start_date} and {end_date}")
@@ -172,6 +198,8 @@ def get_projects_by_date_range(start_date: datetime, end_date: datetime):
     return db_projects
 
 
+
+# _______________Count Projects______________
 
 @Project.get("/projects_count/")
 def count_projects(status: str = None, start_date: datetime = None, end_date: datetime = None):
@@ -189,6 +217,8 @@ def count_projects(status: str = None, start_date: datetime = None, end_date: da
 
 
 
+# _______________Get Completed Projects Count by Manager______________
+
 @Project.get("/managers_completed_projects_count", response_model=CompletedProjectsCount)
 def get_completed_projects_count(manager_id: str):
     logger.info(f"Fetching completed projects count for manager ID: {manager_id}")
@@ -198,6 +228,8 @@ def get_completed_projects_count(manager_id: str):
     return {"completed_projects_count": completed_projects_count}
 
 
+
+# _______________Get Overdue Projects______________
 
 @Project.get("/projects_overdue", response_model=List[ProjectCreate])
 def get_overdue_projects():
@@ -212,6 +244,8 @@ def get_overdue_projects():
     return db_projects
 
 
+
+# _______________Assign Employee to Project______________
 
 @Project.patch("/projects_assign_employee", response_model=ProjectCreate)
 def assign_employee_to_project(project_id: str, emp_id: str):
@@ -233,6 +267,8 @@ def assign_employee_to_project(project_id: str, emp_id: str):
     return db_project
 
 
+
+# _______________Reopen Project______________
 
 @Project.patch("/projects_reopen", response_model=ProjectCreate)
 def reopen_project(project_id: str):

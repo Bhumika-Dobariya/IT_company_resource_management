@@ -13,6 +13,8 @@ Timetracking = APIRouter(tags=["TimeTracking"])
 db = Sessionlocal()
 
 
+# _______________Create Time Tracking Entry______________
+
 @Timetracking.post("/create_time_tracking", response_model=CreateTimeTracking)
 def create_time_tracking_entry(time_tracking: CreateTimeTracking):
     logger.info(f"Creating time tracking entry for employee ID: {time_tracking.emp_id} on date: {time_tracking.date}")
@@ -39,6 +41,8 @@ def create_time_tracking_entry(time_tracking: CreateTimeTracking):
 
 
 
+# _______________Get All Time Tracking Entries______________
+
 @Timetracking.get("/get_all", response_model=List[CreateTimeTracking])
 def get_all_tasks():
     logger.info("Fetching all time tracking entries")
@@ -49,6 +53,8 @@ def get_all_tasks():
     return time_tracking_entries
 
 
+
+# _______________Update Time Tracking Entry______________
 
 @Timetracking.patch("/update_timetracking_by_patch", response_model=CreateTimeTracking)
 def update_timetracking_by_patch(id: str, timetracking: UpdateTimeTracking):
@@ -67,6 +73,8 @@ def update_timetracking_by_patch(id: str, timetracking: UpdateTimeTracking):
 
 
 
+# _______________Delete Time Tracking Entry______________
+
 @Timetracking.delete("/delete_Timetracking")
 def delete_timetracking(id: str):
     logger.info(f"Deleting time tracking entry with ID: {id}")
@@ -81,6 +89,8 @@ def delete_timetracking(id: str):
 
 
 
+# _______________Get Time Tracking Records by Employee______________
+
 @Timetracking.get("/time_tracking_employee", response_model=List[CreateTimeTracking])
 def get_time_tracking_by_employee(emp_id: str):
     logger.info(f"Fetching time tracking records for employee ID: {emp_id}")
@@ -91,6 +101,8 @@ def get_time_tracking_by_employee(emp_id: str):
     return db_time_tracking
 
 
+
+# _______________Get Time Tracking Records by Date Range______________
 
 @Timetracking.get("/time_tracking_date_range", response_model=List[CreateTimeTracking])
 def get_time_tracking_by_date_range(start_date: datetime, end_date: datetime):
@@ -105,6 +117,8 @@ def get_time_tracking_by_date_range(start_date: datetime, end_date: datetime):
     return db_time_tracking
 
 
+
+# _______________Get Total Hours Worked by Employee______________
 
 @Timetracking.get("/time_tracking_total_hours_employee", response_model=Dict[str, float])
 def get_total_hours_worked(emp_id: str, start_date: str, end_date: str):

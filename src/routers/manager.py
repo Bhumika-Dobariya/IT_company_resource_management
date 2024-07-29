@@ -14,7 +14,7 @@ Managers = APIRouter(tags=["manager"])
 db = Sessionlocal()
 
 
-# Create manager
+# __________Create manager__________
 
 @Managers.post("/managers", response_model=ManagerAll)
 def create_manager(manager: ManagerAll):
@@ -36,7 +36,7 @@ def create_manager(manager: ManagerAll):
 
 
 
-# Read manager
+# _________Read manager_________
 
 @Managers.get("/read_managers", response_model=ManagerAll)
 def read_manager(manager_id: str):
@@ -49,7 +49,7 @@ def read_manager(manager_id: str):
 
 
 
-# Get managers by department
+# _______Get managers by department________
 
 @Managers.get("/managers_department", response_model=List[ManagerAll])
 def get_managers_by_department(department: str):
@@ -59,7 +59,7 @@ def get_managers_by_department(department: str):
 
 
 
-# Get all managers
+# ________Get all managers__________
 
 @Managers.get("/list_of_managers", response_model=List[ManagerAll])
 def list_managers():
@@ -69,7 +69,7 @@ def list_managers():
 
 
 
-# Update manager
+# _______Update manager________
 
 @Managers.patch("/update_managers", response_model=ManagerAll)
 def update_manager_by_patch(manager_id: str, manager: UpdateManager):
@@ -99,7 +99,7 @@ def update_manager_by_patch(manager_id: str, manager: UpdateManager):
 
 
 
-# Delete manager
+# _______Delete manager________
 
 @Managers.delete("/managers", response_model=ManagerAll)
 def delete_manager(manager_id: str):
@@ -115,7 +115,7 @@ def delete_manager(manager_id: str):
 
 
 
-# Retrieve a list of employees who directly report to a specific manager
+# ________Retrieve a list of employees who directly report to a specific manager_________
 
 @Managers.get("/managers_all_emp_direct_reports", response_model=List[EmployeeBase])
 def get_direct_reports(manager_id: str):
@@ -133,7 +133,7 @@ def get_direct_reports(manager_id: str):
 
 
 
-# Assign a New Manager to an Employee
+# ________Assign a New Manager to an Employee___________
 
 @Managers.patch("/employees_assign_manager", response_model=EmployeeBase)
 def assign_manager_to_employee(employee_id: str, manager_id: str):
@@ -159,7 +159,7 @@ def assign_manager_to_employee(employee_id: str, manager_id: str):
 
 
 
-# Promote a manager by updating their role to a higher level
+# ___________Promote a manager by updating their role to a higher level___________
 
 @Managers.patch("/managers_promote", response_model=ManagerAll)
 def promote_manager(manager_id: str, new_role: str):

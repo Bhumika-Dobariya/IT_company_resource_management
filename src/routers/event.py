@@ -10,6 +10,7 @@ events = APIRouter(tags=["Events"])
 db = Sessionlocal()
 
 
+# _______________Create Event______________
 
 @events.post("/events/", response_model=CreateEvent)
 def create_event(event: CreateEvent):
@@ -32,6 +33,8 @@ def create_event(event: CreateEvent):
 
 
 
+# _______________Read Event by ID______________
+
 @events.get("/read_event", response_model=CreateEvent)
 def read_event(id: str):
     logger.info(f"Reading event with ID: {id}")
@@ -46,6 +49,8 @@ def read_event(id: str):
 
 
 
+# _______________List All Active Events______________
+
 @events.get("/list_of_event", response_model=List[CreateEvent])
 def list_event():
     logger.info("Listing all active and not deleted events")
@@ -56,6 +61,8 @@ def list_event():
     return events_list
 
 
+
+# _______________Update Event by ID______________
 
 @events.patch("/update_event", response_model=CreateEvent)
 def update_event(id: str, event: UpdateEvent):
@@ -75,6 +82,8 @@ def update_event(id: str, event: UpdateEvent):
 
 
 
+# _______________Delete Event by ID______________
+
 @events.delete("/delete_event", response_model=CreateEvent)
 def delete_event(id: str):
     logger.info(f"Deleting event with ID: {id}")
@@ -92,6 +101,8 @@ def delete_event(id: str):
     return db_event
 
 
+
+# _______________Get Events by Type______________
 
 @events.get("/events_type/", response_model=List[CreateEvent])
 def get_events_by_type(event_type: str):
@@ -111,6 +122,8 @@ def get_events_by_type(event_type: str):
 
 
 
+# _______________Get Events by Organizer______________
+
 @events.get("/events_organizer", response_model=List[CreateEvent])
 def get_events_by_organizer(organizer_name: str):
     logger.info(f"Fetching events organized by: {organizer_name}")
@@ -128,6 +141,8 @@ def get_events_by_organizer(organizer_name: str):
     return db_events
 
 
+
+# _______________Get Total Event Count______________
 
 @events.get("/events_count", response_model=dict)
 def get_event_count():

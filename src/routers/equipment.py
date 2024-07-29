@@ -9,8 +9,9 @@ from logs.log_config import logger
 equipment = APIRouter(tags=["Equipment"])
 db = Sessionlocal()
 
+# _______________Create Equipment______________
 
-@equipment.post("/create_equipment/", response_model=EquipmentBase)
+@equipment.post("/create_equipment", response_model=EquipmentBase)
 def create_equipment(equipment: EquipmentBase):
     logger.info(f"Creating equipment: {equipment}")
     
@@ -29,6 +30,7 @@ def create_equipment(equipment: EquipmentBase):
     return db_equipment
 
 
+# _______________Read Equipment by ID______________
 
 @equipment.get("/read_equipment", response_model=EquipmentBase)
 def read_equipment(id: str):
@@ -44,6 +46,8 @@ def read_equipment(id: str):
 
 
 
+# _______________List All Active Equipment______________
+
 @equipment.get("/list_of_equipment", response_model=List[EquipmentBase])
 def list_of_equipment():
     logger.info("Listing all active and not deleted equipment")
@@ -54,6 +58,8 @@ def list_of_equipment():
     return equipment_list
 
 
+
+# _______________Update Equipment by ID______________
 
 @equipment.patch("/update_equipment", response_model=EquipmentBase)
 def update_equipment(equipment_id: str, equipment: UpdateEquipment):
@@ -73,6 +79,8 @@ def update_equipment(equipment_id: str, equipment: UpdateEquipment):
 
 
 
+#_______________delete equipment by id _________________
+
 @equipment.delete("/delete_equipment", response_model=EquipmentBase)
 def delete_equipment(equipment_id: str):
     logger.info(f"Deleting equipment with ID: {equipment_id}")
@@ -90,6 +98,8 @@ def delete_equipment(equipment_id: str):
     return db_equipment
 
 
+
+#_____________equipment allocate________________
 
 @equipment.put("/equipment_allocate")
 def allocate_equipment(equipment_id: str, employee_id: str):
@@ -113,6 +123,8 @@ def allocate_equipment(equipment_id: str, employee_id: str):
 
 
 
+#____________equipment release______________
+
 @equipment.put("/equipment_release")
 def release_equipment(equipment_id: str):
     logger.info(f"Releasing equipment with ID: {equipment_id}")
@@ -130,6 +142,8 @@ def release_equipment(equipment_id: str):
     return {"message": f"Equipment {equipment_id} released"}
 
 
+
+#______________equipment unassign___________
 
 @equipment.patch("/equipment_unassign", response_model=EquipmentBase)
 def unassign_equipment_from_employee(equipment_id: str):
@@ -152,6 +166,7 @@ def unassign_equipment_from_employee(equipment_id: str):
     return db_equipment
 
 
+#_______________equipment usage_____________
 
 @equipment.get("/equipment_usage", response_model=dict)
 def get_equipment_usage_statistics():

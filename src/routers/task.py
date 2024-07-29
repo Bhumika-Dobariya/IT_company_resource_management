@@ -12,7 +12,7 @@ task = APIRouter(tags=["Tasks"])
 db = Sessionlocal()
 
 
-# Create task
+# _________Create task__________
 
 @task.post("/create_task", response_model=TaskCreate)
 def create_task(tasks: TaskCreate):
@@ -33,7 +33,7 @@ def create_task(tasks: TaskCreate):
 
 
 
-# Read task
+# __________Read task_________
 
 @task.get("/read_task", response_model=TaskCreate)
 def get_task(task_id: str):
@@ -46,7 +46,7 @@ def get_task(task_id: str):
 
 
 
-# Read all tasks
+# ______Read all tasks______
 
 @task.get("/get_all_tasks", response_model=List[TaskCreate])
 def get_all_tasks():
@@ -59,7 +59,7 @@ def get_all_tasks():
 
 
 
-# Update task by patch
+# _________Update task by patch_______
 
 @task.patch("/update_task_by_patch", response_model=TaskCreate)
 def update_task_by_patch(tasks: TaskUpdate, id: str):
@@ -79,7 +79,7 @@ def update_task_by_patch(tasks: TaskUpdate, id: str):
 
 
 
-# Delete task
+# __________Delete task__________
 
 @task.delete("/delete_task")
 def delete_task(id: str):
@@ -96,7 +96,7 @@ def delete_task(id: str):
 
 
 
-# Get tasks by project id
+# _________Get tasks by project id____________
 
 @task.get("/projects_tasks", response_model=List[TaskCreate])
 def get_tasks_by_project(project_id: str):
@@ -109,8 +109,7 @@ def get_tasks_by_project(project_id: str):
 
 
 
-# Get tasks by employee
-
+# _________Get tasks by employee________
 
 @task.get("/employees_tasks", response_model=List[TaskCreate])
 def get_tasks_by_employee(emp_id: str):
@@ -123,7 +122,7 @@ def get_tasks_by_employee(emp_id: str):
 
 
 
-# Retrieve not completed tasks
+# _____Retrieve not completed tasks______
 
 @task.get("/tasks_overdue", response_model=List[TaskCreate])
 def get_overdue_tasks():
@@ -139,7 +138,7 @@ def get_overdue_tasks():
 
 
 
-# Reopen a task that was marked as completed or inactive
+# _________Reopen a task that was marked as completed or inactive________
 
 @task.patch("/tasks_reopen", response_model=TaskCreate)
 def reopen_task(task_id: str):
@@ -162,7 +161,7 @@ def reopen_task(task_id: str):
 
 
 
-# Assign a task to a specific employee
+# _______Assign a task to a specific employee_________
 
 @task.patch("/tasks_assign", response_model=TaskCreate)
 def assign_task(task_id: str, emp_id: str):
@@ -180,7 +179,7 @@ def assign_task(task_id: str, emp_id: str):
 
 
 
-# Mark task as completed
+# ________Mark task as completed__________
 
 @task.patch("/tasks_complete", response_model=TaskCreate)
 def complete_task(task_id: str):
@@ -199,7 +198,7 @@ def complete_task(task_id: str):
 
 
 
-# Get tasks by employee and status
+# ___________Get tasks by employee and status_______
 
 @task.get("/employees_tasks_status", response_model=List[TaskCreate])
 def get_tasks_by_employee_and_status(emp_id: str, status: str):
