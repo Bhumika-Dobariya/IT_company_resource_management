@@ -14,13 +14,13 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from logs.log_config import logger
 from typing import List
+import os
 
 pwd_context = CryptContext(schemes=["bcrypt"],deprecated = "auto")
 
 
 users = APIRouter(tags=["User"])
 db = Sessionlocal()
-
 
 
 # __________Create user___________
@@ -44,7 +44,6 @@ def create_user(user: userschema):
     return new_user
 
 
-
 # ___________Generate OTP___________
 
 def generate_otp(email: str):
@@ -64,10 +63,11 @@ def generate_otp(email: str):
     return otp_code
 
 # Send OTP email
+
 def send_otp_email(email: str, otp_code: str):
-    sender_email = "your_email@example.com"  # Replace with your email
+    sender_email = os.getenv("sender_email")
     receiver_email = email
-    password = "your_password"  # Replace with your email password
+    password = os.getenv("password")
     subject = "Your OTP Code"
     message_text = f"Your OTP is {otp_code} which is valid for 10 minutes"
 
@@ -79,14 +79,18 @@ def send_otp_email(email: str, otp_code: str):
     message.attach(MIMEText(message_text, "plain"))
 
     try:
+        logger.info(f"Sending OTP email to {receiver_email}")
+        
         server = smtplib.SMTP("smtp.gmail.com", 587)
         server.starttls()
         server.login(sender_email, password)
         server.sendmail(sender_email, receiver_email, message.as_string())
-        logger.info(f"OTP email sent to {receiver_email}")
         server.quit()
+        
+        logger.info("OTP email sent successfully")
+        
     except Exception as e:
-        logger.error(f"Failed to send email: {e}")
+        logger.error(f"Failed to send OTP email to {receiver_email}: {e}")
 
 
 
